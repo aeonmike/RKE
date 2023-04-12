@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  go-helloworld:
+    image: mikejc30/helloworld
+    build: .
+    ports:
+      - 9094:9094
+    restart: "unless-stopped"
