@@ -164,28 +164,28 @@ systemctl restart kubelet
 
 echo 'Checking all plugins and packages are OK'
 
-REQUIRED_PKG="docker"
-PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
-echo Checking for $REQUIRED_PKG: $PKG_OK
-if [ "" = "$PKG_OK" ]; then
-  echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
-  sudo apt-get --yes install $REQUIRED_PKG
+REQUIRED_PKG1="docker"
+PKG_OK1=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG1|grep "install ok installed")
+echo Checking for $REQUIRED_PKG1: $PKG_OK1
+if [ "" = "$PKG_OK1" ]; then
+  echo "No $REQUIRED_PKG1. Setting up $REQUIRED_PKG1."
+  sudo apt-get --yes install $REQUIRED_PKG1
 fi
 
-REQUIRED_PKG="containerd"
-PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
-echo Checking for $REQUIRED_PKG: $PKG_OK
-if [ "" = "$PKG_OK" ]; then
-  echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
-  sudo apt-get --yes install $REQUIRED_PKG
+REQUIRED_PKG2="containerd"
+PKG_OK2=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG2|grep "install ok installed")
+echo Checking for $REQUIRED_PKG2: $PKG_OK2
+if [ "" = "$PKG_OK2" ]; then
+  echo "No $REQUIRED_PKG2. Setting up $REQUIRED_PKG2."
+  sudo apt-get --yes install $REQUIRED_PKG2
 fi
 
-REQUIRED_PKG="kubelet"
-PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
-echo Checking for $REQUIRED_PKG: $PKG_OK
-if [ "" = "$PKG_OK" ]; then
-  echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
-  sudo apt-get --yes install $REQUIRED_PKG
+REQUIRED_PKG3="kubelet"
+PKG_OK3=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG3|grep "install ok installed")
+echo Checking for $REQUIRED_PKG3: $PKG_OK3
+if [ "" = "$PKG_OK3" ]; then
+  echo "No $REQUIRED_PKG3. Setting up $REQUIRED_PKG3."
+  sudo apt-get --yes install $REQUIRED_PKG3
 fi
 
 
