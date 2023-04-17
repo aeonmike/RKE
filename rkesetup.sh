@@ -38,14 +38,14 @@ EOF
 sleep 5s
 #Install Docker and Containerd
 
-echo 'Installing Docker and Containerd'
 {
 sudo apt update
-sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt update
-sudo apt install -y containerd.io docker-ce docker-ce-cli
+apt-cache policy docker-ce
+sudo apt install docker-ce=5:20.10.24~3-0~ubuntu-focal containerd.io docker-ce-cli
 }
 
 #Setting docker parameters
