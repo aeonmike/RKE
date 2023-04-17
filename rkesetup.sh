@@ -150,9 +150,7 @@ KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"
 EOF
 
 sleep 2s
-sudo tee /etc/systemd/system/kubelet.service.d/10-kubeadm.conf <<EOF
-Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
-EOF
+echo Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false" >> /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 
 systemctl daemon-reload
