@@ -74,13 +74,11 @@ sudo systemctl start docker
 #Configure containerd and start service
 
 echo 'Configure containerd and start service'
-sudo su -
 mkdir -p /etc/containerd
 containerd config default>/etc/containerd/config.toml
 
 sudo systemctl restart containerd
 sudo systemctl enable containerd
-systemctl status containerd
 
 
 #Confirm that docker group has been created on system
@@ -160,7 +158,7 @@ EOF
 systemctl daemon-reload
 systemctl enable kubelet
 systemctl restart kubelet
-systemctl status  kubelet
+
 
 #Checking all plugins and packages are OK
 
