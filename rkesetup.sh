@@ -153,18 +153,13 @@ sleep 2s
 echo Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false" >> /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 
-systemctl daemon-reload
-systemctl enable kubelet
-systemctl restart kubelet
-
-
 #Checking all plugins and packages are OK
 
 echo 'Checking all plugins and packages are OK'
 
 STATUS="$(systemctl is-active docker)"
 if [ "${STATUS}" = "active" ]; then
-    echo "Execute your tasks ....."
+    echo "Docker - OK Installed"
 else 
     echo " Service not running.... so exiting "  
     exit 1  
@@ -172,8 +167,12 @@ fi
 
 STATUS="$(systemctl is-active containerd)"
 if [ "${STATUS}" = "active" ]; then
-    echo "Execute your tasks ....."
+    echo "Containerd - OK Installed"
 else 
     echo " Service not running.... so exiting "  
     exit 1  
 fi
+
+sleep 20s
+
+exit
