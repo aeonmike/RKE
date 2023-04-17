@@ -162,52 +162,18 @@ systemctl restart kubelet
 
 echo 'Checking all plugins and packages are OK'
 
-REQUIRED_PKG1="docker"
-PKG_OK1=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG1|grep "install ok installed")
-echo Checking for $REQUIRED_PKG1: $PKG_OK1
-if [ "" = "$PKG_OK1" ]; then
-  echo "No $REQUIRED_PKG1. Setting up $REQUIRED_PKG1."
-  sudo apt-get --yes install $REQUIRED_PKG1
+STATUS="$(systemctl is-active docker)"
+if [ "${STATUS}" = "active" ]; then
+    echo "Execute your tasks ....."
+else 
+    echo " Service not running.... so exiting "  
+    exit 1  
 fi
 
-REQUIRED_PKG2="containerd"
-PKG_OK2=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG2|grep "install ok installed")
-echo Checking for $REQUIRED_PKG2: $PKG_OK2
-if [ "" = "$PKG_OK2" ]; then
-  echo "No $REQUIRED_PKG2. Setting up $REQUIRED_PKG2."
-  sudo apt-get --yes install $REQUIRED_PKG2
+STATUS="$(systemctl is-active containerd)"
+if [ "${STATUS}" = "active" ]; then
+    echo "Execute your tasks ....."
+else 
+    echo " Service not running.... so exiting "  
+    exit 1  
 fi
-
-REQUIRED_PKG3="kubelet"
-PKG_OK3=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG3|grep "install ok installed")
-echo Checking for $REQUIRED_PKG3: $PKG_OK3
-if [ "" = "$PKG_OK3" ]; then
-  echo "No $REQUIRED_PKG3. Setting up $REQUIRED_PKG3."
-  sudo apt-get --yes install $REQUIRED_PKG3
-fi
-
-
-echo 'Checking all plugins and packages are OK'
-
-MODULE1="br_netfilter"
-if lsmod | grep -wq "$MODULE1"; then
-  echo "$MODULE1 is loaded!"
-  exit 0
-else
-  echo "$MODULE1 is not loaded!"
-  exit 1
-fi
-
-MODULE2="overlay"
-if lsmod | grep -wq "$MODULE2"; then
-  echo "$MODULE2 is loaded!"
-  exit 0
-else
-  echo "$MODULE2 is not loaded!"
-  exit 1
-fi
-
-echo 'If System Readiness Results - OK -- proceed to cluster setup' 
-sleep 10s
-
-exit
