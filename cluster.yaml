@@ -8,18 +8,14 @@ nodes:
       - etcd
       - worker
     docker_socket: /var/run/docker.sock
-  - address: 172.16.16.173
-    user: root
-    role:
-      - controlplane
-      - etcd
-      - worker
-    docker_socket: /var/run/docker.sock
   - address: 172.16.16.174
     user: root
     role:
-      - controlplane
-      - etcd
+      - worker
+    docker_socket: /var/run/docker.sock
+  - address: 172.16.16.175
+    user: root
+    role:
       - worker
     docker_socket: /var/run/docker.sock
 
