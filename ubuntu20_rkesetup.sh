@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 
 # Enable ssh password authentication
 
-echo -e "${Grn}Enable SSH password authentication:"
+echo -e "${Ylow}Enable SSH password authentication:"
 
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
 echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
@@ -28,7 +28,7 @@ sleep 10s
 # Add Docker GPG key, Docker Repo, install Docker and enable services
 # Add repo and Install packages
 
-echo -e "${Grn}Running System Update${NC}"
+echo -e "${Ylow}Running System Update${NC}"
 
 {
 sudo apt update
@@ -37,8 +37,9 @@ sudo apt -y full-upgrade
 
 #Adding hostname entry
 
-echo -e "${Ble}Adding hostname entry${NC}"
+echo -e "${Ylow}Adding hostname entry${NC}"
 
+sleep 2s
 sudo tee /etc/hosts << EOF
 
 172.16.16.108   rancherui.devsecops-academe.com  rancherui
@@ -52,7 +53,9 @@ sleep 5s
 
 #Install RKE v1.3.3
 
-echo -e "${Ble}Install RKE v1.3.3${NC}"
+echo -e "${Ylow}Install RKE v1.3.3${NC}"
+
+sleep 2s
 
 {
 wget https://github.com/rancher/rke/releases/download/v1.3.3/rke_linux-amd64
@@ -65,7 +68,9 @@ rke --version
 
 #Install Kubectl 1.21.14
 
-echo -e "${Ble} Install Kubectl 1.21.14${NC}"
+echo -e "${Ylow} Install Kubectl 1.21.14${NC}"
+
+sleep 2s
 
 {
 apt update -y
@@ -79,7 +84,9 @@ sudo apt-get install -y kubectl=1.21.14-00
 
 #Install Docker V20.10 and Containerd
 
-echo -e "${Ble} Install Docker V20.10 and Containerd${NC}"
+echo -e "${Ylow} Install Docker V20.10 and Containerd${NC}"
+
+sleep 2s
 
 {
 sudo apt update
@@ -93,7 +100,9 @@ apt update && apt install -y docker-ce=5:20.10.0~3-0~ubuntu-focal docker-ce-cli=
 #Setting docker parameters
 
 
-echo -e "${Ble} Setting docker parameters${NC}"
+echo -e "${Ylow}Setting docker parameters${NC}"
+
+sleep 2s
 
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
@@ -121,7 +130,9 @@ sudo systemctl start docker
 
 #Configure containerd and start service
 
-echo -e "${Ble}Configure containerd and start service${NC}"
+echo -e "${Ylow}Configure containerd and start service${NC}"
+
+sleep 2s
 
 mkdir -p /etc/containerd
 containerd config default>/etc/containerd/config.toml
@@ -136,6 +147,7 @@ sudo groupadd docker
 # Add your current system user to the Docker group
 sudo gpasswd -a $USER docker
 
+echo -e "${Ylow}Checking Docker Version${NC}"
 docker --version
 sleep 10s
 
@@ -179,11 +191,13 @@ lsmod | grep br_netfilter
 
 sleep 10s
 
-echo 'Checking all plugins and packages are OK'
+clear
+
+echo -e "${Ylow}Checking all plugins and packages are OK${NC}"
 
 STATUS="$(systemctl is-active docker)"
 if [ "${STATUS}" = "active" ]; then
-    echo -e "${Grn} Docker - OK Installed"
+    echo -e "${Grn}Docker - OK Installed"
 else 
     echo " Service not running.... so exiting "  
     exit 1  
@@ -191,7 +205,7 @@ fi
 
 STATUS="$(systemctl is-active containerd)"
 if [ "${STATUS}" = "active" ]; then
-    echo -e "${Grn} Containerd - OK Installed"
+    echo -e "${Grn}Containerd - OK Installed"
 else 
     echo " Service not running.... so exiting "  
     exit 1  
