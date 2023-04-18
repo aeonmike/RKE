@@ -6,6 +6,7 @@
 Grn='\033[0;32m'        # Green
 Ylow='\033[0;33m'       # Yellow
 Ble='\033[0;34m'         # Blue
+NC='\033[0m' # No Color
 
 
 # Enable ssh password authentication
@@ -27,7 +28,7 @@ sleep 10s
 # Add Docker GPG key, Docker Repo, install Docker and enable services
 # Add repo and Install packages
 
-echo -e "${Grn}Running System Update"
+echo -e "${Grn}Running System Update${NC}"
 
 {
 sudo apt update
@@ -36,7 +37,7 @@ sudo apt -y full-upgrade
 
 #Adding hostname entry
 
-echo -e "${Ble}Adding hostname entry"
+echo -e "${Ble}Adding hostname entry${NC}"
 
 sudo tee /etc/hosts << EOF
 
@@ -51,7 +52,7 @@ sleep 5s
 
 #Install RKE v1.3.3
 
-echo -e "${Ble}Install RKE v1.3.3"
+echo -e "${Ble}Install RKE v1.3.3${NC}"
 
 {
 wget https://github.com/rancher/rke/releases/download/v1.3.3/rke_linux-amd64
@@ -64,7 +65,7 @@ rke --version
 
 #Install Kubectl 1.21.14
 
-echo -e "${Ble} Install Kubectl 1.21.14"
+echo -e "${Ble} Install Kubectl 1.21.14${NC}"
 
 {
 apt update -y
@@ -78,7 +79,7 @@ sudo apt-get install -y kubectl=1.21.14-00
 
 #Install Docker V20.10 and Containerd
 
-echo -e "${Ble} Install Docker V20.10 and Containerd"
+echo -e "${Ble} Install Docker V20.10 and Containerd${NC}"
 
 {
 sudo apt update
@@ -92,7 +93,7 @@ apt update && apt install -y docker-ce=5:20.10.0~3-0~ubuntu-focal docker-ce-cli=
 #Setting docker parameters
 
 
-echo -e "${Ble} Setting docker parameters"
+echo -e "${Ble} Setting docker parameters${NC}"
 
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
@@ -109,7 +110,7 @@ sudo mkdir -p /etc/systemd/system/docker.service.d
 
 # Start and enable Services
 
-echo -e "${Ble} Start and enable Services"
+echo -e "${Ble} Start and enable Services${NC}"
 
 sleep 5s
 
@@ -120,7 +121,7 @@ sudo systemctl start docker
 
 #Configure containerd and start service
 
-echo -e "${Ble}Configure containerd and start service"
+echo -e "${Ble}Configure containerd and start service${NC}"
 
 mkdir -p /etc/containerd
 containerd config default>/etc/containerd/config.toml
@@ -196,8 +197,8 @@ else
     exit 1  
 fi
 
-type -P rke &>/dev/null && echo -e "${Grn}RKE Found" || echo "Not Found"
-type -P kubectl &>/dev/null && echo -e "${Grn}Kubectl Found" || echo "Not Found"
+type -P rke &>/dev/null && echo -e "${Grn}RKE Found${NC}" || echo "Not Found"
+type -P kubectl &>/dev/null && echo -e "${Grn}Kubectl Found${NC}" || echo "Not Found"
 
 sleep 20s
 
