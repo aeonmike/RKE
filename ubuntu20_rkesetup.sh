@@ -21,6 +21,8 @@ echo -e "${Grn} Adding root password using: Devsecops#2023"
 echo -e "${Grn} Setting root password:"
 echo -e "Devsecops#2023\nDevsecops#2023" | passwd root >/dev/null 2>&1
 
+sleep 10s
+
 # Commands for all K8s nodes
 # Add Docker GPG key, Docker Repo, install Docker and enable services
 # Add repo and Install packages
