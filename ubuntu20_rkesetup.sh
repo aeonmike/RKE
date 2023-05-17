@@ -49,6 +49,19 @@ EOF
 
 sleep 5s
 
+#Install Utility tools
+
+echo -e "${Ylow}Install utility tools${NC}"
+
+sleep 2s
+
+{
+apt update
+apt install git net-tools
+git --version
+}
+
+sleep 2s
 
 #Install RKE v1.3.3
 
