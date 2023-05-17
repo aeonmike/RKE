@@ -42,8 +42,7 @@ echo -e "${Ylow}Adding hostname entry${NC}"
 sleep 2s
 sudo tee /etc/hosts << EOF
 127.0.0.1       localhost.localdomain            localhost
-172.16.16.108   rancherui.devsecops-academe.com  rancherui
-172.16.16.172   master.devsecops-academe.com     master
+172.16.16.173   master.devsecops-academe.com     master
 172.16.16.174   worker1.devsecops-academe.com    worker1
 172.16.16.175   worker2.devsecops-academe.com    worker2
 EOF
@@ -80,6 +79,22 @@ sudo mv ~/kubernetes.list /etc/apt/sources.list.d
 sudo apt update
 sudo apt-get install -y kubectl=1.21.14-00 
 }
+
+
+#Install Helm
+
+echo -e "${Ylow} Install Helm Package Manager${NC}"
+
+sleep 2s
+
+{
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod +x get_helm.sh
+./get_helm.sh
+helm version
+}
+
+sleep 2s
 
 
 #Install Docker V20.10 and Containerd
