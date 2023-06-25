@@ -145,6 +145,7 @@ sleep 2s
 
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
+      "insecure-registries": ["localhost:5000"],
       "exec-opts": ["native.cgroupdriver=cgroupfs"],
       "log-driver": "json-file",
       "log-opts": {
