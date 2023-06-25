@@ -125,6 +125,17 @@ apt-cache policy docker-ce
 apt update && apt install -y docker-ce=5:20.10.0~3-0~ubuntu-focal docker-ce-cli=5:20.10.0~3-0~ubuntu-focal docker-ce-rootless-extras=5:20.10.0~3-0~ubuntu-focal containerd.io 
 }
 
+
+echo -e "${Ylow} Install Longhorn dependency${NC}"
+
+{
+sudo apt install nfs-common -y sudo 
+systemctl enable iscsid 
+}
+
+sleep 2s
+
+
 #Setting docker parameters
 
 
