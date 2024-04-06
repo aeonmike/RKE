@@ -18,20 +18,19 @@ containerd config default > config.toml
 
 
 
-# INFORMATION #
-#SystemdCgroup is a systemd feature used for controlling and managing processes in Linux systems. 
-#In particular, it's related to systemd's #integration with cgroups (Control Groups)
-#which is a Linux kernel feature that allows for the #organization and management of processes #into hierarchical groups, providing #resource isolation and control.
+#INFORMATION
+#SystemdCgroup is a systemd feature used for controlling and managing processes in Linux systems. Providing resource isolation and #control.
 
 #Edit Containerd Parameters for Compatibility to K8
 
 {
 echo "Find the SystemdCgroup field and change its value to true"
 echo "SystemdCgroup = true"
-sleep 10s
+sleep 2s
 }
 
 #Edit Config
+
 {
 nano config.toml
 }
@@ -67,18 +66,16 @@ sysctl --system
 #Add k8 repo
 
 {
-cat <<EOF | sudo tee /etc/yum.repos.d/k8s.repo
+
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
 enabled=1
 gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
 EOF
 
 dnf repolist
 dnf -y install kubectl
 }
-
-
